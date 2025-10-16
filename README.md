@@ -13,19 +13,37 @@ It wraps the `python-idb` library with a clean CLI that exports the artifacts re
 - **Structure introspection** – Structure flags, member offsets, types, and comments straight from `$ structs`.
 - **JSON or text reports** – Filtered, address-bounded views for quick inspection or downstream scripting.
 
-## Requirements
+## Installation
 
-- Python 3.9+
-- [`python-idb`](https://github.com/williballenthin/python-idb)
-- [`capstone`](http://www.capstone-engine.org/)
-
-Install prerequisites:
+Install from PyPI:
 
 ```bash
+pip install i64-parser
+```
+
+Or install from source:
+
+```bash
+git clone https://github.com/aidanqm/i64-parser.git
+cd i64-parser
 pip install python-idb capstone
 ```
 
+## Requirements
+
+- Python 3.9+
+- [`python-idb`](https://github.com/williballenthin/python-idb) >= 0.8.0
+- [`capstone`](http://www.capstone-engine.org/) >= 5.0.0
+
 ## Usage
+
+After installation, use the `i64-parser` command:
+
+```bash
+i64-parser <path-to-database> [--report kind] [options]
+```
+
+Or run as a module:
 
 ```bash
 python -m src.main <path-to-database> [--report kind] [options]
@@ -49,16 +67,16 @@ Examples:
 
 ```bash
 # Dump function disassembly
-python -m src.main samples/kernel32.i64 --report functions --limit 10
+i64-parser samples/kernel32.i64 --report functions --limit 10
 
 # Export all metadata to JSON for automation
-python -m src.main samples/kernel32.i64 --report all --json > kernel32.json
+i64-parser samples/kernel32.i64 --report all --json > kernel32.json
 
 # Inspect segments with read/exec permissions
-python -m src.main samples/kernel32.i64 --report segments --match "rx"
+i64-parser samples/kernel32.i64 --report segments --match "rx"
 
 # List TIL typedefs containing "PEB"
-python -m src.main samples/kernel32.i64 --report types --match PEB
+i64-parser samples/kernel32.i64 --report types --match PEB
 ```
 
 ## Repository Layout
